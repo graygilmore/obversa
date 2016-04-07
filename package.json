@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "watch": "node-sass --include-path styles --include-path node_modules/bourbon/app/assets/stylesheets styles/obversa.scss public/styles/obversa.css -w",
     "build-css": "node-sass --include-path styles --include-path node_modules/bourbon/app/assets/stylesheets styles/obversa.scss public/styles/obversa.css"
   },
   "devDependencies": {
