@@ -1,4 +1,4 @@
-require "sinatra"
+require "sinatra/base"
 
 module Obversa
   class Application < Sinatra::Base
