@@ -1,9 +1,12 @@
 require "sinatra/base"
 require "faraday"
+require "json"
 
 module Obversa
   class Application < Sinatra::Base
     get "/" do
+      response = api(:get) { |r| r.url "/api/products.json" }
+      @products = JSON.parse(response.body)
       erb :index
     end
 
