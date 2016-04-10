@@ -5,9 +5,13 @@ require "json"
 module Obversa
   class Application < Sinatra::Base
     get "/" do
+      redirect "/products"
+    end
+
+    get "/products" do
       response = api(:get) { |r| r.url "/api/products.json" }
-      @products = JSON.parse(response.body)
-      erb :index
+      @products = JSON.parse(response.body)["products"]
+      erb :"products/index"
     end
 
     private
