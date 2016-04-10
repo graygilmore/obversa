@@ -14,6 +14,12 @@ module Obversa
       erb :"products/index"
     end
 
+    get "/products/:slug" do |slug|
+      response = api(:get) { |r| r.url "/api/products/#{slug}.json" }
+      @product = JSON.parse(response.body)
+      erb :"products/show"
+    end
+
     private
 
     def api(method, &block)
