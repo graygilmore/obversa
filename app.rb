@@ -19,6 +19,15 @@ module Obversa
       erb :"products/index"
     end
 
+    # Main categories
+    get "/category/:slug" do |slug|
+      taxon_response = api(:get) { |r| r.url "api/taxonomies/#{slug}.json" }
+      @taxon = JSON.parse(taxon_response.body)
+      products_response = api(:get) { |r| r.url "/api/taxons/products.json?id=#{slug}" }
+      @products = JSON.parse(products_response.body)["products"]
+      erb :category
+    end
+
     get "/products/:slug" do |slug|
       response = api(:get) { |r| r.url "/api/products/#{slug}.json" }
       @product = JSON.parse(response.body)
