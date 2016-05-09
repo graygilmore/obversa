@@ -34,6 +34,21 @@ module Obversa
       erb :"products/show"
     end
 
+    post "/line-items" do
+      response = api(:post) do |r|
+        order_id = "12345"
+        variant = "line_item[variant_id]=#{params['variant']}"
+        quantity = "line_item[quantity]=#{params['quantity']}"
+        r.url "/api/orders/#{order_id}/line_items?#{variant}&#{quantity}"
+      end
+
+      if response.status == 201
+        redirect "/cart"
+      else
+        redirect back
+      end
+    end
+
     private
 
     def api(method, &block)
