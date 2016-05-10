@@ -1,8 +1,10 @@
 <div class="products">
-  <% @products.each do |product| %>
-    <div class="product">
-      <h2><a href="/products/<%= product['slug'] %>"><%= product["name"] %></a></h2>
-      <p><%= product["price"] %></h2>
-    </div>
+  <% if @products %>
+    <% @products.each do |product| %>
+      <div class="product">
+        <h2><a href="/products/<%= product['slug'] %>"><%= product["name"] %></a></h2>
+        <p><%= product["price"] %></h2>
+      </div>
+    <% end %>
   <% end %>
 </div>
