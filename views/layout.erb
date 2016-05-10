@@ -8,6 +8,13 @@
   <body>
     <header>
       <h1>Obversa</h1>
+
+      <% if session[:email] %>
+        <p>Logged in as <%= session[:email] %>.</p>
+        <a href="/logout">Log out</a>
+      <% else %>
+        <a href="/login">Log in</a>
+      <% end %>
     </header>
 
     <% if flash %>

@@ -10,10 +10,46 @@ module Obversa
       register Sinatra::Reloader
     end
 
+    enable :sessions
     register Sinatra::Flash
 
     get "/" do
       redirect "/products"
+    end
+
+    get "/login" do
+      erb :login
+    end
+
+    post "/login" do
+      response = conn.post do |r|
+        r.url "/login"
+        r.headers["Accept"] = "text/javascript"
+        r.headers["Content-Type"] = "application/json"
+        r.body = JSON.generate(
+          { spree_user: { email: params["email"], password: params["password"] } }
+        )
+      end
+
+      json = JSON.parse(response.body)
+
+      if response.status == 200
+        session[:spree_api_key] = json["user"]["spree_api_key"]
+        session[:email] = json["user"]["email"]
+        flash.next[:success] = "You have successfully logged in."
+
+        redirect to("/")
+      else
+        flash.next[:error] = json["error"]
+        redirect back
+      end
+    end
+
+    get "/logout" do
+      session[:spree_api_key] = nil
+      session[:email] = nil
+      flash.next[:success] = "Successfully logged out."
+      redirect back
     end
 
     get "/products" do
