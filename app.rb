@@ -1,5 +1,6 @@
 require "sinatra/base"
 require "sinatra/reloader"
+require "sinatra/flash"
 require "faraday"
 require "json"
 
@@ -8,6 +9,8 @@ module Obversa
     configure :development do
       register Sinatra::Reloader
     end
+
+    register Sinatra::Flash
 
     get "/" do
       redirect "/products"

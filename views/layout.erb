@@ -9,6 +9,13 @@
     <header>
       <h1>Obversa</h1>
     </header>
+
+    <% if flash %>
+      <% flash.each do |type, message| %>
+        <p><%= message %></p>
+      <% end %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
